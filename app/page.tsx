@@ -34,6 +34,7 @@ const services = [
 ];
 
 function Arrow() { return <span aria-hidden="true">↗</span>; }
+function WhatsAppIcon() { return <img className="whatsapp-icon" src="/images/WhatsApp.webp" alt="" aria-hidden="true" />; }
 function ReviewerInitials({ name }: { name: string }) {
   return <span className="reviewer-avatar" aria-hidden="true">{name.split(' ').map(part => part[0]).slice(0, 2).join('')}</span>;
 }
@@ -44,7 +45,7 @@ function Header() {
   return <header className="site-header"><div className="container flex items-center justify-between gap-4 py-5">
     <Brand />
     <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex"><a href="#services">Our services</a><a href="#about">About us</a><a href="#testimonials">Reviews</a><a href="#contact">Find us</a></nav>
-    <a href={business.telephone} className="button button-small">Let’s talk <Arrow /></a>
+    <a href={business.whatsapp} target="_blank" rel="noopener noreferrer" className="button button-small"><WhatsAppIcon /> Let’s talk <Arrow /></a>
   </div></header>;
 }
 function Hero() {
@@ -52,7 +53,7 @@ function Hero() {
     <div><p className="eyebrow"><span className="status-dot" /> YOUR LOCAL CONNECTION IN MELAKA</p>
       <h1 id="hero-title">Power on.<br />Stay cool.<br /><span>Feel at home.</span></h1>
       <p className="hero-copy">Electrical, wiring and aircond services, right here in Melaka. Let’s get your space working the way it should.</p>
-      <div className="mt-8 flex flex-wrap gap-3"><a href={business.telephone} className="button">Call {business.phone} <Arrow /></a><a href="#services" className="button button-outline">Explore services <span aria-hidden="true">↓</span></a></div>
+      <div className="mt-8 flex flex-wrap gap-3"><a href={business.telephone} className="button">Call {business.phone} <Arrow /></a><a href={business.whatsapp} target="_blank" rel="noopener noreferrer" className="button button-whatsapp"><WhatsAppIcon /> WhatsApp us <Arrow /></a><a href="#services" className="button button-outline">Explore services <span aria-hidden="true">↓</span></a></div>
       <div className="hero-proof"><span className="rating"><span aria-label="4.4 out of 5 stars">★ 4.4</span> <span className="muted">/ 5</span></span><span>60 Google reviews<small>Based on the supplied business listing</small></span></div>
     </div>
     <div className="hero-visual"><Photo src="/images/8.png" alt="Amirul Electrical Services working on a local project" label="Good work. Close to home." className="hero-photo" />
@@ -93,7 +94,7 @@ function Testimonials() {
 }
 function Contact() {
   return <section id="contact" className="section contact" aria-labelledby="contact-title"><div className="container">
-    <div className="contact-panel grid gap-10 lg:grid-cols-[1.2fr_1fr]"><div><p className="eyebrow">LET’S GET STARTED</p><h2 id="contact-title">A better space<br />starts with a call.</h2><p>Have a job in mind? Let’s talk about it.</p><a href={business.telephone} className="contact-phone">{business.phone} <Arrow /></a></div>
+    <div className="contact-panel grid gap-10 lg:grid-cols-[1.2fr_1fr]"><div><p className="eyebrow">LET’S GET STARTED</p><h2 id="contact-title">A better space<br />starts with a call.</h2><p>Have a job in mind? Let’s talk about it.</p><div className="contact-actions"><a href={business.telephone} className="contact-phone">{business.phone} <Arrow /></a><a href={business.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-whatsapp"><WhatsAppIcon /> WhatsApp us</a></div></div>
     <div className="contact-details"><div><h3>VISIT / FIND US</h3><address>{business.address}</address><a href={business.maps} target="_blank" rel="noopener noreferrer" className="text-link">Get directions <Arrow /></a></div><div><h3>OPENING HOURS</h3><p>Open 24 hours</p><small>Please call ahead to confirm service availability.</small></div></div></div>
   </div></section>;
 }
