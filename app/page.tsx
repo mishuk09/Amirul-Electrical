@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { Photo } from '@/components/photo';
+import { BadgeCheck, Check, ClipboardCheck, MapPin, MessageCircle, Quote, Star } from 'lucide-react';
 
 const reviewSource = fs.readFileSync(path.join(process.cwd(), 'sources', 'Amirul Electrical Services-service.txt'), 'utf8');
 const reviewNames = ['Ikmal Khairulezuan', 'Sri Vikneswaran', 'SYED FAREEZ BIN SYED NASIR'];
@@ -22,6 +23,7 @@ function getReview(name: string) {
 const business = {
   phone: '016-788 9628',
   telephone: 'tel:+60167889628',
+  whatsapp: 'https://wa.me/60167889628?text=Hi%20Amirul%20Electrical%20Services%2C%20I%27d%20like%20to%20ask%20about%20your%20services.',
   address: 'No 67, Jalan KI1, Taman Krubong Indah, 75260 Melaka',
   maps: 'https://www.google.com/maps/search/?api=1&query=Amirul+Electrical+Services+No+67+Jalan+KI1+Taman+Krubong+Indah+75260+Melaka',
 };
@@ -32,6 +34,9 @@ const services = [
 ];
 
 function Arrow() { return <span aria-hidden="true">↗</span>; }
+function ReviewerInitials({ name }: { name: string }) {
+  return <span className="reviewer-avatar" aria-hidden="true">{name.split(' ').map(part => part[0]).slice(0, 2).join('')}</span>;
+}
 function Brand() {
   return <a href="#home" className="brand" aria-label="Amirul Electrical Services home"><span className="brand-mark" aria-hidden="true">ϟ</span><span>AMIRUL<small>ELECTRICAL SERVICES</small></span></a>;
 }
@@ -67,21 +72,22 @@ function Services() {
 }
 function About() {
   return <section id="about" className="about section" aria-labelledby="about-title"><div className="container grid gap-12 lg:grid-cols-2">
-    <div><p className="eyebrow">BASED IN KRUBONG. HERE FOR MELAKA.</p><h2 id="about-title">Local service.<br />A direct conversation.</h2><p className="about-copy">Amirul Electrical Services is based in Taman Krubong Indah, Melaka. Whether you’re looking for electrical installation, wiring or aircond services, getting started is as simple as a phone call.</p><a href={business.maps} target="_blank" rel="noopener noreferrer" className="text-link">Find us on Google Maps <Arrow /></a></div>
-    <div className="steps">{[
-      ['01', 'Tell us what you need', 'Share the issue, your location and the service you’re looking for.'],
-      ['02', 'Discuss the details', 'Ask about the scope, pricing and available appointment times.'],
-      ['03', 'Agree on the next step', 'Confirm the arrangements directly before any work begins.'],
-    ].map(([number, title, description]) => <div className="step" key={number}><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></div>)}</div>
+    <div className="about-intro"><p className="eyebrow"><MapPin size={15} aria-hidden="true" /> BASED IN KRUBONG. HERE FOR MELAKA.</p><h2 id="about-title">Local service.<br />A direct conversation.</h2><p className="about-copy">Amirul Electrical Services is based in Taman Krubong Indah, Melaka. Whether you’re looking for electrical installation, wiring or aircond services, getting started is as simple as a phone call.</p><div className="about-location"><div className="about-location-icon"><MapPin size={21} aria-hidden="true" /></div><div><strong>Serving Melaka with care</strong><p>One local contact for the work your space depends on.</p></div></div><a href={business.maps} target="_blank" rel="noopener noreferrer" className="text-link">Find us on Google Maps <Arrow /></a></div>
+    <div className="steps"><p className="steps-label">HOW IT WORKS</p>{[
+      [MessageCircle, 'Tell us what you need', 'Share the issue, your location and the service you’re looking for.'],
+      [ClipboardCheck, 'Discuss the details', 'Ask about the scope, pricing and available appointment times.'],
+      [Check, 'Agree on the next step', 'Confirm the arrangements directly before any work begins.'],
+    ].map(([Icon, title, description], index) => <div className="step" key={title as string}><div className="step-icon"><Icon size={19} aria-hidden="true" /></div><div className="step-content"><span>0{index + 1}</span><h3>{title as string}</h3><p>{description as string}</p></div></div>)}</div>
   </div></section>;
 }
 function Testimonials() {
   return <section id="testimonials" className="section testimonials" aria-labelledby="testimonials-title"><div className="container">
     <div className="section-heading"><div><p className="eyebrow">FROM THE COMMUNITY</p><h2 id="testimonials-title">What customers<br />are saying.</h2></div><p>Reviews shown from the<br className="hidden md:block" /> supplied Google listing.</p></div>
-    <div className="grid gap-6 md:grid-cols-3">{reviewNames.map((name, index) => <figure className="testimonial-card" key={name}>
-      <div className="testimonial-rating" aria-label="5 out of 5 stars">★★★★★</div>
+    <div className="grid gap-6 md:grid-cols-3">{reviewNames.map(name => <figure className="testimonial-card" key={name}>
+      <div className="testimonial-card-top"><Quote className="testimonial-quote-icon" size={28} strokeWidth={1.5} aria-hidden="true" /><span className="testimonial-source"><BadgeCheck size={15} aria-hidden="true" /> Google review</span></div>
+      <div className="testimonial-rating" aria-label="5 out of 5 stars">{[1, 2, 3, 4, 5].map(star => <Star key={star} size={15} fill="currentColor" strokeWidth={1.5} aria-hidden="true" />)}</div>
       <blockquote>“{getReview(name)}”</blockquote>
-      <figcaption><span className="testimonial-number">0{index + 1}</span><span>{name}</span></figcaption>
+      <figcaption><ReviewerInitials name={name} /><span><strong>{name}</strong><small>Customer review</small></span></figcaption>
     </figure>)}</div>
   </div></section>;
 }
@@ -91,6 +97,12 @@ function Contact() {
     <div className="contact-details"><div><h3>VISIT / FIND US</h3><address>{business.address}</address><a href={business.maps} target="_blank" rel="noopener noreferrer" className="text-link">Get directions <Arrow /></a></div><div><h3>OPENING HOURS</h3><p>Open 24 hours</p><small>Please call ahead to confirm service availability.</small></div></div></div>
   </div></section>;
 }
+function WhatsAppButton() {
+  return <a className="whatsapp-button" href={business.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Chat with Amirul Electrical Services on WhatsApp">
+    <img src="/images/WhatsApp.webp" alt="" aria-hidden="true" />
+    <span>WhatsApp us</span>
+  </a>;
+}
 export default function Home() {
-  return <><a href="#main" className="skip-link">Skip to content</a><Header /><main id="main"><div id="home"><Hero /></div><div className="service-strip" aria-label="Service summary"><div className="container flex flex-wrap justify-between gap-4 py-5"><span>ELECTRICAL INSTALLATION</span><span aria-hidden="true">✳</span><span>WIRING SERVICES</span><span aria-hidden="true">✳</span><span>AIRCOND SERVICES</span></div></div><Services /><About /><Testimonials /><Contact /></main><footer><div className="container flex flex-col justify-between gap-6 py-8 md:flex-row md:items-center"><Brand /><p>Concept website by <a href="https://novanest.my" target="_blank" rel="noopener noreferrer">Novanest <Arrow /></a><small>Demo for presentation • Not the official business website</small></p></div></footer></>;
+  return <><a href="#main" className="skip-link">Skip to content</a><Header /><main id="main"><div id="home"><Hero /></div><div className="service-strip" aria-label="Service summary"><div className="container flex flex-wrap justify-between gap-4 py-5"><span>ELECTRICAL INSTALLATION</span><span aria-hidden="true">✳</span><span>WIRING SERVICES</span><span aria-hidden="true">✳</span><span>AIRCOND SERVICES</span></div></div><Services /><About /><Testimonials /><Contact /></main><footer><div className="container flex flex-col justify-between gap-6 py-8 md:flex-row md:items-center"><Brand /><p>Concept website by <a href="https://novanest.my" target="_blank" rel="noopener noreferrer">Novanest <Arrow /></a><small>Demo for presentation • Not the official business website</small></p></div></footer><WhatsAppButton /></>;
 }
