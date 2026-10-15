@@ -26,6 +26,7 @@ const business = {
   whatsapp: 'https://wa.me/60167889628?text=Hi%20Amirul%20Electrical%20Services%2C%20I%27d%20like%20to%20ask%20about%20your%20services.',
   address: 'No 67, Jalan KI1, Taman Krubong Indah, 75260 Melaka',
   maps: 'https://www.google.com/maps/search/?api=1&query=Amirul+Electrical+Services+No+67+Jalan+KI1+Taman+Krubong+Indah+75260+Melaka',
+  mapEmbed: 'https://www.google.com/maps?q=Amirul+Electrical+Services+No+67+Jalan+KI1+Taman+Krubong+Indah+75260+Melaka&output=embed',
 };
 const services = [
   { number: '01', title: 'Electrical installation', description: 'Planning an electrical installation? Tell us about your space and the work you need.', tag: 'POWER YOUR SPACE', image: '/images/5.png' },
@@ -44,7 +45,7 @@ function Brand() {
 function Header() {
   return <header className="site-header"><div className="container flex items-center justify-between gap-4 py-5">
     <Brand />
-    <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex"><a href="#services">Our services</a><a href="#about">About us</a><a href="#testimonials">Reviews</a><a href="#contact">Find us</a></nav>
+    <nav aria-label="Main navigation" className="hidden items-center gap-8 md:flex"><a href="#services">Our services</a><a href="#about">About us</a><a href="#testimonials">Reviews</a><a href="#location">Find us</a></nav>
     <a href={business.whatsapp} target="_blank" rel="noopener noreferrer" className="button button-small"><WhatsAppIcon /> Let’s talk <Arrow /></a>
   </div></header>;
 }
@@ -98,6 +99,15 @@ function Contact() {
     <div className="contact-details"><div><h3>VISIT / FIND US</h3><address>{business.address}</address><a href={business.maps} target="_blank" rel="noopener noreferrer" className="text-link">Get directions <Arrow /></a></div><div><h3>OPENING HOURS</h3><p>Open 24 hours</p><small>Please call ahead to confirm service availability.</small></div></div></div>
   </div></section>;
 }
+function Location() {
+  return <section id="location" className="location section" aria-labelledby="location-title"><div className="container">
+    <div className="location-heading"><div><p className="eyebrow"><MapPin size={15} aria-hidden="true" /> FIND US IN MELAKA</p><h2 id="location-title">Close to home.<br />Easy to find.</h2></div><p>Visit Amirul Electrical Services in<br className="hidden md:block" /> Taman Krubong Indah.</p></div>
+    <div className="location-panel">
+      <div className="location-map"><iframe title="Map showing Amirul Electrical Services in Taman Krubong Indah, Melaka" src={business.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" /></div>
+      <div className="location-details"><div className="location-pin"><MapPin size={22} aria-hidden="true" /></div><p className="eyebrow">OUR ADDRESS</p><address>{business.address}</address><p className="location-note">Open 24 hours. Please call ahead to confirm service availability.</p><a href={business.maps} target="_blank" rel="noopener noreferrer" className="button button-outline">See on Google Maps <Arrow /></a></div>
+    </div>
+  </div></section>;
+}
 function WhatsAppButton() {
   return <a className="whatsapp-button" href={business.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Chat with Amirul Electrical Services on WhatsApp">
     <img src="/images/WhatsApp.webp" alt="" aria-hidden="true" />
@@ -105,5 +115,5 @@ function WhatsAppButton() {
   </a>;
 }
 export default function Home() {
-  return <><a href="#main" className="skip-link">Skip to content</a><Header /><main id="main"><div id="home"><Hero /></div><div className="service-strip" aria-label="Service summary"><div className="container flex flex-wrap justify-between gap-4 py-5"><span>ELECTRICAL INSTALLATION</span><span aria-hidden="true">✳</span><span>WIRING SERVICES</span><span aria-hidden="true">✳</span><span>AIRCOND SERVICES</span></div></div><Services /><About /><Testimonials /><Contact /></main><footer><div className="container flex flex-col justify-between gap-6 py-8 md:flex-row md:items-center"><Brand /><p>Concept website by <a href="https://novanest.my" target="_blank" rel="noopener noreferrer">Novanest <Arrow /></a><small>Demo for presentation • Not the official business website</small></p></div></footer><WhatsAppButton /></>;
+  return <><a href="#main" className="skip-link">Skip to content</a><Header /><main id="main"><div id="home"><Hero /></div><div className="service-strip" aria-label="Service summary"><div className="container flex flex-wrap justify-between gap-4 py-5"><span>ELECTRICAL INSTALLATION</span><span aria-hidden="true">✳</span><span>WIRING SERVICES</span><span aria-hidden="true">✳</span><span>AIRCOND SERVICES</span></div></div><Services /><About /><Testimonials /><Location /><Contact /></main><footer><div className="container flex flex-col justify-between gap-6 py-8 md:flex-row md:items-center"><Brand /><p>Concept website by <a href="https://novanest.my" target="_blank" rel="noopener noreferrer">Novanest <Arrow /></a><small>Demo for presentation • Not the official business website</small></p></div></footer><WhatsAppButton /></>;
 }
